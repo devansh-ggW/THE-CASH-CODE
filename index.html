@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The Cash Code by Gaz Martin, a practical field guide to building with focus, leverage and execution.">
+<title>The Cash Code | Gaz Martin</title>
+<style>
+:root {
+  --ivory: #f3f0e8;
+  --paper: #fbfaf6;
+  --ink: #171817;
+  --charcoal: #272a27;
+  --muted: #73756f;
+  --line: rgba(23,24,23,.16);
+  --gold: #b29664;
+  --gold-dark: #806940;
+  --night: #1d211f;
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --cursor-x: 50%;
+  --cursor-y: 35%;
+  --scroll: 0;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--ivory); }
+body { margin: 0; background: var(--ivory); color: var(--ink); font-family: var(--sans); font-weight: 400; letter-spacing: .01em; overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 20; opacity: .045; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E"); mix-blend-mode: multiply; }
+body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 19; background: radial-gradient(circle at var(--cursor-x) var(--cursor-y), rgba(255,248,225,.17), transparent 27%), linear-gradient(110deg, transparent 40%, rgba(187,154,96,.08) 53%, transparent 66%); transform: translateX(calc((var(--scroll) - .5) * 4%)); transition: background-position .2s ease; }
+a { color: inherit; text-decoration: none; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; }
+:focus-visible { outline: 2px solid var(--gold-dark); outline-offset: 5px; }
+.skip { position: fixed; top: 12px; left: 12px; transform: translateY(-160%); background: var(--ink); color: var(--paper); padding: 10px 14px; z-index: 100; }
+.skip:focus { transform: none; }
+.progress { position: fixed; top: 0; left: 0; height: 3px; width: 100%; z-index: 50; background: rgba(23,24,23,.08); }
+.progress span { display: block; height: 100%; width: calc(var(--scroll) * 100%); transform-origin: left; background: var(--gold-dark); }
+.nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 40; display: flex; justify-content: space-between; align-items: center; padding: 28px 4.5vw; mix-blend-mode: multiply; }
+.brand { font-size: 11px; font-weight: 700; letter-spacing: .22em; }
+.nav-link { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; border-bottom: 1px solid var(--ink); padding-bottom: 5px; transition: color .3s ease, border-color .3s ease; }
+.nav-link:hover { color: var(--gold-dark); border-color: var(--gold-dark); }
+.scene { position: relative; overflow: hidden; }
+.scene-inner { width: min(1180px, 90vw); margin: 0 auto; position: relative; }
+.eyebrow { font-size: 10px; text-transform: uppercase; letter-spacing: .24em; color: var(--muted); }
+.rule { height: 1px; background: var(--line); width: 100%; }
+.serif { font-family: var(--serif); font-weight: 400; }
+.hero { min-height: 100svh; display: flex; align-items: center; padding: 120px 0 100px; background: radial-gradient(ellipse at 67% 38%, rgba(255,255,255,.9), transparent 38%), var(--ivory); }
+.hero::before { content: ""; position: absolute; width: 78vw; height: 38vw; max-height: 620px; right: -20vw; top: 10%; background: linear-gradient(125deg, transparent 22%, rgba(255,255,255,.7) 49%, transparent 66%); transform: rotate(-12deg) translateX(calc(var(--scroll) * -18%)); opacity: .72; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1.05fr; align-items: center; gap: 4vw; }
+.hero-copy { position: relative; z-index: 2; padding-bottom: 2vw; }
+.hero-kicker { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+.hero-kicker::before { content: ""; width: 36px; height: 1px; background: var(--gold-dark); }
+.hero h1 { margin: 0; font-size: clamp(66px, 10.3vw, 154px); line-height: .84; letter-spacing: -.075em; max-width: 720px; }
+.hero-byline { margin: 28px 0 42px; font-size: 13px; letter-spacing: .19em; text-transform: uppercase; }
+.hero-note { color: var(--muted); max-width: 290px; font-size: 13px; line-height: 1.55; border-left: 1px solid var(--gold); padding-left: 15px; }
+.cta { display: inline-flex; align-items: center; gap: 18px; margin-top: 34px; padding: 16px 20px 16px 22px; border: 1px solid var(--ink); background: var(--ink); color: var(--paper); text-transform: uppercase; letter-spacing: .16em; font-size: 10px; cursor: pointer; transition: background .3s ease, color .3s ease, transform .3s ease; }
+.cta::after { content: "↗"; font-size: 16px; color: var(--gold); transition: transform .3s ease; }
+.cta:hover { background: transparent; color: var(--ink); transform: translateY(-3px); }
+.cta:hover::after { transform: translate(3px,-3px); }
+.book-stage { min-height: 520px; display: grid; place-items: center; perspective: 1600px; position: relative; }
+.book-stage::before { content: ""; position: absolute; width: 70%; height: 8%; bottom: 14%; background: rgba(30,28,23,.3); filter: blur(28px); transform: rotate(-13deg) translateX(calc(var(--scroll) * 3%)); }
+.book { --tilt-x: 0deg; --tilt-y: 0deg; --book-zoom: 0; width: clamp(240px, 30vw, 410px); aspect-ratio: .69; position: relative; transform-style: preserve-3d; transform: scale(calc(1 + var(--book-zoom))) rotateX(calc(3deg + var(--tilt-y))) rotateY(calc(-16deg + var(--tilt-x))) rotateZ(-3deg) translateY(calc(var(--scroll) * -72px)); transition: transform .18s ease-out; cursor: grab; }
+.book:active { cursor: grabbing; }
+.cover { position: absolute; inset: 0; background: linear-gradient(145deg, #282d29, #151917 73%); color: #f0e9d9; overflow: hidden; box-shadow: 8px 14px 0 #c0b8a8, 13px 20px 28px rgba(34,31,24,.31), inset 0 0 0 1px rgba(255,255,255,.15); transform: translateZ(13px); }
+.cover::before { content: ""; position: absolute; inset: 10px; border: 1px solid rgba(202,171,104,.55); }
+.cover::after { content: ""; position: absolute; inset: -20% 38% -20% -50%; background: linear-gradient(100deg, transparent 25%, rgba(255,255,255,.22) 49%, transparent 63%); transform: translateX(calc(var(--cursor-x) / 10)); opacity: .36; }
+.cover-title { position: absolute; top: 17%; left: 11%; right: 8%; font-family: var(--serif); font-size: clamp(34px, 4.2vw, 63px); line-height: .9; letter-spacing: -.07em; }
+.cover-author { position: absolute; bottom: 15%; left: 12%; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: #cfb981; }
+.cover-mark { position: absolute; right: 12%; bottom: 12%; width: 31px; height: 31px; border: 1px solid #b29664; border-radius: 50%; }
+.cover-mark::before, .cover-mark::after { content: ""; position: absolute; background: var(--gold); left: 50%; top: 6px; width: 1px; height: 17px; transform-origin: 50% 9px; }
+.cover-mark::after { transform: rotate(90deg); }
+.spine { position: absolute; width: 27px; height: 100%; left: -27px; top: 0; transform-origin: right; transform: rotateY(-90deg); background: linear-gradient(90deg,#101210,#45483d,#191c1a); }
+.edge { position: absolute; width: 100%; height: 100%; left: 0; top: 0; transform: translateZ(-3px); border-right: 4px solid #d4cdbd; background: repeating-linear-gradient(0deg, #d8d0c0 0 1px, #bcb4a4 1px 2px); }
+.book-caption { position: absolute; right: -12%; bottom: 7%; writing-mode: vertical-rl; transform: rotate(180deg); color: var(--muted); font-size: 10px; letter-spacing: .22em; text-transform: uppercase; }
+.scene-story { min-height: 94svh; background: var(--charcoal); color: var(--paper); display: flex; align-items: center; }
+.story-glow { position: absolute; width: 55vw; height: 55vw; right: -18vw; top: 10%; border-radius: 50%; background: radial-gradient(circle, rgba(188,159,101,.22), transparent 64%); transform: translateY(calc(var(--scroll) * -13%)); }
+.story-layout { display: grid; grid-template-columns: .7fr 1.3fr; gap: 9vw; align-items: end; }
+.story-index { border-top: 1px solid rgba(255,255,255,.28); padding-top: 15px; color: #b9b7ae; font-size: 10px; letter-spacing: .2em; }
+.story-copy { position: relative; }
+.story-copy h2 { font-size: clamp(42px, 6vw, 84px); line-height: .96; letter-spacing: -.06em; margin: 0 0 34px; max-width: 760px; }
+.story-copy h2 span { color: var(--gold); }
+.story-copy p { color: #b9b7ae; max-width: 390px; margin-left: 22%; line-height: 1.7; font-size: 14px; }
+.story-datum { position: absolute; right: 3%; bottom: -22%; font-family: var(--serif); font-size: clamp(70px, 15vw, 220px); color: rgba(255,255,255,.035); }
+.journey { min-height: 105svh; padding: 150px 0 120px; background: #e7e3da; }
+.journey-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 90px; }
+.journey h2, .inside h2, .philosophy h2, .roadmap h2 { font-size: clamp(46px, 7vw, 100px); letter-spacing: -.07em; line-height: .88; margin: 0; }
+.journey-intro { max-width: 240px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.timeline { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+.timeline::before { content: ""; position: absolute; top: 54px; left: 0; right: 0; border-top: 1px solid var(--ink); opacity: .7; }
+.step { position: relative; padding: 0 18px 0 0; min-height: 230px; }
+.step:not(:first-child) { padding-left: 20px; }
+.step-dot { width: 10px; height: 10px; background: var(--gold-dark); border-radius: 50%; position: relative; z-index: 1; margin: 49px 0 25px; box-shadow: 0 0 0 5px #e7e3da; }
+.step-num { font-size: 10px; letter-spacing: .18em; color: var(--muted); }
+.step h3 { font-family: var(--serif); font-size: clamp(25px, 3vw, 42px); font-weight: 400; letter-spacing: -.05em; margin: 12px 0 10px; }
+.step p { color: var(--muted); font-size: 12px; line-height: 1.5; max-width: 190px; }
+.code { min-height: 96svh; padding: 140px 0; background: var(--paper); }
+.code-layout { display: grid; grid-template-columns: .5fr 1.5fr; gap: 8vw; }
+.code-label { padding-top: 8px; }
+.code-list { border-top: 1px solid var(--line); }
+.code-line { display: grid; grid-template-columns: 48px 1fr; gap: 12px; padding: 25px 0; border-bottom: 1px solid var(--line); transition: padding-left .45s ease, color .45s ease; }
+.code-line:hover { padding-left: 18px; color: var(--gold-dark); }
+.code-line b { font-size: 10px; font-weight: 400; color: var(--gold-dark); letter-spacing: .15em; }
+.code-line span { font-family: var(--serif); font-size: clamp(25px, 3.3vw, 46px); letter-spacing: -.045em; }
+.inside { min-height: 86svh; padding: 150px 0; background: #d9d3c7; }
+.inside-head { display: flex; justify-content: space-between; align-items: end; margin-bottom: 70px; }
+.inside-head p { max-width: 240px; font-size: 12px; line-height: 1.6; color: var(--muted); }
+.topic-field { display: flex; flex-wrap: wrap; align-items: baseline; gap: 18px 24px; max-width: 1000px; }
+.topic { font-family: var(--serif); font-size: clamp(31px, 5.1vw, 74px); letter-spacing: -.06em; line-height: 1.05; color: var(--charcoal); transition: color .4s ease, transform .4s ease; cursor: default; }
+.topic:nth-child(even) { font-style: italic; color: #767469; }
+.topic:hover { color: var(--gold-dark); transform: translateY(-5px) rotate(-2deg); }
+.book-scene { min-height: 100svh; padding: 140px 0; background: var(--ivory); }
+.book-scene::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 52%, rgba(255,255,255,.8), transparent 34%), linear-gradient(90deg, rgba(191,180,157,.22), transparent 22%, transparent 76%, rgba(191,180,157,.22)); }
+.book-layout { display: grid; grid-template-columns: .65fr 1.35fr; align-items: center; gap: 7vw; }
+.book-text h2 { font-size: clamp(49px, 7vw, 100px); line-height: .88; letter-spacing: -.07em; margin: 18px 0 25px; }
+.book-text p { color: var(--muted); font-size: 13px; line-height: 1.65; max-width: 290px; }
+.inspect { margin-top: 42px; display: flex; gap: 16px; align-items: center; font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+.inspect i { display: block; width: 44px; height: 1px; background: var(--gold-dark); }
+.book-hero { min-height: 580px; }
+.book-hero .book { width: clamp(265px, 29vw, 390px); transform: scale(calc(1 + var(--book-zoom))) rotateX(calc(3deg + var(--tilt-y))) rotateY(calc(-19deg + var(--tilt-x))) rotateZ(-2deg) translateY(calc(var(--scroll) * -12px)); }
+.back-panel { position: absolute; inset: 0; z-index: -1; transform: translateX(18%) translateY(7%) rotateZ(4deg); background: #f5f0e5; border: 1px solid #c8bdab; box-shadow: 10px 19px 30px rgba(34,31,24,.15); padding: 42px 32px; color: var(--charcoal); transition: transform .7s cubic-bezier(.2,.75,.2,1); }
+.book-hero:hover .back-panel { transform: translateX(35%) translateY(12%) rotateZ(8deg); }
+.back-panel h3 { font-family: var(--serif); font-size: 29px; font-weight: 400; letter-spacing: -.05em; max-width: 190px; }
+.back-panel p { color: var(--muted); font-size: 11px; line-height: 1.6; max-width: 170px; margin-top: 55%; }
+.philosophy { min-height: 94svh; background: var(--night); color: var(--paper); padding: 150px 0 130px; }
+.philosophy-head { display: flex; justify-content: space-between; align-items: end; margin-bottom: 80px; }
+.philosophy h2 { color: var(--paper); }
+.philosophy-head p { color: #a6a69e; max-width: 230px; font-size: 12px; line-height: 1.55; }
+.statements { display: grid; grid-template-columns: 1fr 1fr; gap: 0 8vw; }
+.statement { position: relative; padding: 28px 0 30px 42px; border-top: 1px solid rgba(255,255,255,.17); color: #dedbd0; font-family: var(--serif); font-size: clamp(21px, 2.8vw, 37px); letter-spacing: -.045em; transition: color .3s ease, padding-left .4s ease; }
+.statement::before { content: ""; position: absolute; left: 0; top: 39px; width: 18px; height: 1px; background: var(--gold); }
+.statement:hover { color: var(--gold); padding-left: 55px; }
+.roadmap { min-height: 95svh; padding: 150px 0; background: #ebe8e0; }
+.roadmap-head { display: flex; justify-content: space-between; align-items: end; margin-bottom: 75px; }
+.roadmap-head p { max-width: 245px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.roadmap-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--ink); }
+.phase { padding: 24px 22px 20px 0; min-height: 290px; border-right: 1px solid var(--line); }
+.phase + .phase { padding-left: 24px; }
+.phase:last-child { border-right: none; }
+.phase-index { font-size: 10px; color: var(--gold-dark); letter-spacing: .18em; }
+.phase h3 { font-family: var(--serif); font-size: clamp(31px, 4vw, 56px); font-weight: 400; line-height: .95; letter-spacing: -.06em; margin: 42px 0 22px; }
+.phase p { max-width: 200px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.purchase { min-height: 92svh; padding: 150px 0 120px; background: var(--charcoal); color: var(--paper); display: flex; align-items: center; }
+.purchase-layout { display: grid; grid-template-columns: 1.2fr .8fr; gap: 8vw; align-items: end; }
+.purchase h2 { font-family: var(--serif); font-size: clamp(62px, 10vw, 150px); font-weight: 400; letter-spacing: -.09em; line-height: .8; margin: 25px 0 35px; }
+.purchase-byline { color: var(--gold); letter-spacing: .2em; font-size: 11px; text-transform: uppercase; }
+.purchase-intro { color: #b7b6ae; font-size: 13px; line-height: 1.65; max-width: 280px; }
+.price { margin-top: 36px; padding-top: 17px; border-top: 1px solid rgba(255,255,255,.2); display: flex; justify-content: space-between; max-width: 300px; font-size: 12px; color: #b7b6ae; }
+.price strong { color: var(--paper); font-weight: 400; }
+.purchase .cta { border-color: var(--paper); margin-top: 22px; }
+.purchase .cta:hover { background: var(--paper); color: var(--ink); }
+.footer { padding: 25px 4.5vw 32px; background: var(--charcoal); color: #8d8e87; display: flex; justify-content: space-between; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; border-top: 1px solid rgba(255,255,255,.12); }
+.footer a:hover { color: var(--gold); }
+.reveal { clip-path: inset(0 0 100% 0); transform: translateY(24px); transition: clip-path 1s cubic-bezier(.2,.72,.2,1), transform 1s cubic-bezier(.2,.72,.2,1); }
+.reveal.is-visible { clip-path: inset(0 0 0 0); transform: none; }
+@media (max-width: 760px) {
+  .nav { padding: 20px 6vw; }
+  .scene-inner { width: 88vw; }
+  .hero { padding-top: 110px; align-items: start; }
+  .hero-grid, .story-layout, .code-layout, .book-layout, .purchase-layout { grid-template-columns: 1fr; gap: 55px; }
+  .hero h1 { font-size: clamp(60px, 18vw, 110px); }
+  .hero-copy { padding-top: 30px; }
+  .book-stage { min-height: 430px; }
+  .book { width: min(72vw, 320px); }
+  .book-caption { right: 1%; }
+  .story-layout { gap: 55px; }
+  .story-copy h2 { font-size: clamp(44px, 13vw, 75px); }
+  .story-copy p { margin-left: 0; }
+  .story-datum { right: 0; bottom: -10%; }
+  .journey, .code, .inside, .book-scene, .philosophy, .roadmap, .purchase { padding: 105px 0; }
+  .journey-head, .inside-head, .philosophy-head, .roadmap-head { display: block; }
+  .journey-intro, .inside-head p, .philosophy-head p, .roadmap-head p { margin-top: 25px; }
+  .timeline { grid-template-columns: 1fr 1fr; gap: 30px 0; }
+  .timeline::before { top: 54px; left: 0; right: 0; }
+  .step { min-height: 210px; }
+  .step:nth-child(3), .step:nth-child(4) { border-top: 1px solid var(--line); }
+  .step:nth-child(3) .step-dot, .step:nth-child(4) .step-dot { margin-top: 25px; }
+  .code-layout { gap: 45px; }
+  .code-line { grid-template-columns: 34px 1fr; }
+  .code-line span { font-size: 30px; }
+  .inside-head { margin-bottom: 55px; }
+  .topic-field { gap: 15px 17px; }
+  .topic { font-size: clamp(30px, 9vw, 50px); }
+  .book-layout { gap: 25px; }
+  .book-hero { min-height: 510px; }
+  .book-hero .book { width: min(72vw, 320px); }
+  .back-panel { transform: translateX(15%) translateY(7%) rotateZ(4deg); }
+  .statements { grid-template-columns: 1fr; }
+  .statement { font-size: 29px; }
+  .roadmap-grid { grid-template-columns: 1fr; }
+  .phase, .phase + .phase { min-height: 0; padding: 26px 0; border-right: none; border-bottom: 1px solid var(--line); }
+  .phase h3 { margin: 22px 0 14px; }
+  .purchase-layout { align-items: start; }
+  .purchase h2 { font-size: 23vw; }
+  .footer { padding: 25px 6vw; gap: 16px; flex-direction: column; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .book { transform: scale(1) rotateZ(-3deg); }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="nav" aria-label="Primary navigation">
+  <a class="brand" href="#top">DEWIFY</a>
+  <a class="nav-link" href="#purchase">Get the book</a>
+</header>
+<main id="main">
+  <section class="scene hero" id="top" aria-labelledby="hero-title">
+    <div class="scene-inner hero-grid">
+      <div class="hero-copy">
+        <div class="hero-kicker eyebrow">A field guide by Gaz Martin</div>
+        <h1 id="hero-title" class="serif reveal">The<br>Cash<br>Code</h1>
+        <div class="hero-byline">Gaz Martin</div>
+        <p class="hero-note reveal">A practical way to think about ambition, leverage, money and the work that makes an idea real.</p>
+        <a class="cta magnetic" href="#purchase">Get the cash code</a>
+      </div>
+      <div class="book-stage" aria-label="A closed book with a dark green cover">
+        <div class="book-caption">The physical idea</div>
+        <div class="book hero-book" role="img" aria-label="The Cash Code book cover">
+          <div class="edge"></div><div class="spine"></div>
+          <div class="cover"><div class="cover-title">THE<br>CASH<br>CODE</div><div class="cover-author">GAZ MARTIN</div><div class="cover-mark"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="scene scene-story" aria-labelledby="story-title">
+    <div class="story-glow"></div>
+    <div class="scene-inner story-layout">
+      <div class="story-index">01 / The story</div>
+      <div class="story-copy">
+        <h2 id="story-title" class="serif reveal">At fifteen, <span>the screen</span> started to look like a door.</h2>
+        <p>Videos about wealth, business and freedom made another life feel possible. The useful part was not watching. It was testing an idea, seeing what happened, then trying again with better judgment.</p>
+        <div class="story-datum" aria-hidden="true">15</div>
+      </div>
+    </div>
+  </section>
+  <section class="scene journey" aria-labelledby="journey-title">
+    <div class="scene-inner">
+      <div class="journey-head"><h2 id="journey-title" class="serif">The<br>journey</h2><p class="journey-intro">A sequence of experiments. Each one made the next question more useful.</p></div>
+      <div class="timeline">
+        <article class="step"><div class="step-num">01</div><div class="step-dot"></div><h3>Dropshipping</h3><p>Learning that attention is not the same as demand.</p></article>
+        <article class="step"><div class="step-num">02</div><div class="step-dot"></div><h3>Reselling</h3><p>Finding value in the gap between a want and a solution.</p></article>
+        <article class="step"><div class="step-num">03</div><div class="step-dot"></div><h3>Digital products</h3><p>Turning a useful process into something repeatable.</p></article>
+        <article class="step"><div class="step-num">04</div><div class="step-dot"></div><h3>AI advertising automation</h3><p>Using leverage without handing over human judgment.</p></article>
+      </div>
+    </div>
+  </section>
+  <section class="scene code" aria-labelledby="code-title">
+    <div class="scene-inner code-layout">
+      <div class="code-label"><div class="eyebrow">03 / The code</div><h2 id="code-title" class="serif" style="font-size:clamp(43px,6vw,85px);line-height:.9;letter-spacing:-.07em;margin:28px 0 0">Make the<br>loop<br>shorter.</h2></div>
+      <div class="code-list">
+        <div class="code-line"><b>01</b><span>Input <em>→</em> action <em>→</em> feedback <em>→</em> adaptation</span></div>
+        <div class="code-line"><b>02</b><span>Problem <em>→</em> buyer <em>→</em> offer <em>→</em> distribution</span></div>
+        <div class="code-line"><b>03</b><span>Human judgment <em>+</em> AI leverage <em>+</em> distribution</span></div>
+        <div class="code-line"><b>04</b><span>Make <em>→</em> keep <em>→</em> reinvest <em>→</em> protect <em>→</em> grow</span></div>
+        <div class="code-line"><b>05</b><span>Skill <em>→</em> offer <em>→</em> customer <em>→</em> revenue <em>→</em> system</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="scene inside" aria-labelledby="inside-title">
+    <div class="scene-inner">
+      <div class="inside-head"><h2 id="inside-title" class="serif">What is<br>inside</h2><p>Not a collection of slogans. A working vocabulary for the decisions that come next.</p></div>
+      <div class="topic-field" aria-label="Book themes">
+        <span class="topic">Business</span><span class="topic">AI</span><span class="topic">Sales</span><span class="topic">Money</span><span class="topic">Focus</span><span class="topic">Rejection</span><span class="topic">Systems</span><span class="topic">Long term thinking</span><span class="topic">90 day execution plan</span>
+      </div>
+    </div>
+  </section>
+  <section class="scene book-scene" aria-labelledby="book-title">
+    <div class="scene-inner book-layout">
+      <div class="book-text"><div class="eyebrow">05 / The object</div><h2 id="book-title" class="serif">Hold the<br>idea.</h2><p>Move around the cover. The light changes because the object has a surface, an edge and a point of view.</p><div class="inspect"><i></i> Move your cursor across the book</div></div>
+      <div class="book-stage book-hero">
+        <div class="back-panel"><div class="eyebrow">Dewify edition</div><h3>A practical field guide for building with focus.</h3><p>Ambition is useful when it has somewhere to go. Start with the next clear action.</p></div>
+        <div class="book detail-book" role="img" aria-label="Interactive perspective view of The Cash Code book">
+          <div class="edge"></div><div class="spine"></div><div class="cover"><div class="cover-title">THE<br>CASH<br>CODE</div><div class="cover-author">GAZ MARTIN</div><div class="cover-mark"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="scene philosophy" aria-labelledby="philosophy-title">
+    <div class="scene-inner">
+      <div class="philosophy-head"><h2 id="philosophy-title" class="serif">Keep<br>the signal.</h2><p>Ideas are only useful when they change what you do with the next hour.</p></div>
+      <div class="statements">
+        <div class="statement">Stop consuming your future through a screen.</div><div class="statement">Build evidence that you can create value.</div>
+        <div class="statement">Use AI as leverage, not as magic.</div><div class="statement">Learn to sell, and learn to manage money.</div>
+        <div class="statement">Handle rejection without making it your identity.</div><div class="statement">Stay focused long enough to discover what works.</div>
+        <div class="statement">Turn successful actions into systems.</div><div class="statement">Build something that compounds.</div>
+      </div>
+    </div>
+  </section>
+  <section class="scene roadmap" aria-labelledby="roadmap-title">
+    <div class="scene-inner">
+      <div class="roadmap-head"><h2 id="roadmap-title" class="serif">The 90 day<br>build</h2><p>A compact rhythm for moving from curiosity to evidence, without pretending the work is easy.</p></div>
+      <div class="roadmap-grid">
+        <article class="phase"><div class="phase-index">DAYS 01 TO 30</div><h3>Learn,<br>choose,<br>validate</h3><p>Study the problem. Choose a direction. Speak to the people who might care.</p></article>
+        <article class="phase"><div class="phase-index">DAYS 31 TO 60</div><h3>Build,<br>sell,<br>collect feedback</h3><p>Put a real offer in front of real people. Listen more closely than you defend.</p></article>
+        <article class="phase"><div class="phase-index">DAYS 61 TO 90</div><h3>Improve,<br>systemize,<br>repeat</h3><p>Keep what works. Remove friction. Make the next cycle easier to begin.</p></article>
+      </div>
+    </div>
+  </section>
+  <section class="scene purchase" id="purchase" aria-labelledby="purchase-title">
+    <div class="scene-inner purchase-layout">
+      <div><div class="purchase-byline">The Cash Code, Gaz Martin</div><h2 id="purchase-title">Begin<br>with<br>proof.</h2></div>
+      <div><p class="purchase-intro">A premium digital business book for the person who is ready to spend less time watching and more time building.</p><div class="price"><span>Digital edition</span><strong>Price to be set</strong></div><a class="cta magnetic checkout" href="#purchase">Get the cash code</a></div>
+    </div>
+  </section>
+</main>
+<footer class="footer"><span>DEWIFY</span><span>The Cash Code by Gaz Martin</span><a href="#top">Back to top ↑</a></footer>
+<script>
+const CHECKOUT_URL = "";
+const root = document.documentElement;
+const bookEls = document.querySelectorAll('.book');
+let targetX = 50, targetY = 35, raf = null;
+function updateScroll() {
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  root.style.setProperty('--scroll', max > 0 ? window.scrollY / max : 0);
+}
+window.addEventListener('scroll', updateScroll, { passive: true });
+window.addEventListener('resize', updateScroll);
+window.addEventListener('pointermove', (event) => {
+  targetX = event.clientX / window.innerWidth * 100;
+  targetY = event.clientY / window.innerHeight * 100;
+  root.style.setProperty('--cursor-x', targetX + '%');
+  root.style.setProperty('--cursor-y', targetY + '%');
+  if (!raf) raf = requestAnimationFrame(() => {
+    const rx = (targetX - 50) * .18;
+    const ry = (targetY - 50) * -.12;
+    bookEls.forEach(book => { book.style.setProperty('--tilt-x', rx + 'deg'); book.style.setProperty('--tilt-y', ry + 'deg'); });
+    raf = null;
+  });
+}, { passive: true });
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
+}, { threshold: .18 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+document.querySelectorAll('.detail-book').forEach(book => {
+  book.addEventListener('pointerenter', () => book.style.setProperty('--book-zoom', '.035'));
+  book.addEventListener('pointerleave', () => book.style.setProperty('--book-zoom', '0'));
+});
+const magnetic = document.querySelectorAll('.magnetic');
+magnetic.forEach(button => {
+  button.addEventListener('pointermove', (event) => {
+    const box = button.getBoundingClientRect();
+    const x = (event.clientX - box.left - box.width / 2) * .14;
+    const y = (event.clientY - box.top - box.height / 2) * .14;
+    button.style.transform = `translate(${x}px, ${y}px)`;
+  });
+  button.addEventListener('pointerleave', () => { button.style.transform = ''; });
+});
+document.querySelectorAll('.checkout').forEach(button => {
+  button.addEventListener('click', (event) => {
+    if (CHECKOUT_URL.trim()) { event.preventDefault(); window.location.assign(CHECKOUT_URL); }
+  });
+});
+updateScroll();
+</script>
+</body>
+</html>
