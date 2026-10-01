@@ -188,20 +188,6 @@ h1 em, h2 em { font-style: italic; color: var(--purple); }
 }
 .image-note { font-size: 9px; letter-spacing: .22em; color: var(--muted); text-align: center; margin: 22px 0 0; }
 
-.marquee-strip {
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  padding: 18px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
-  color: var(--muted);
-  font-size: 10px;
-  letter-spacing: .24em;
-}
-.marquee-strip i { color: var(--gold); font-style: normal; }
-
 .section-kicker { margin-bottom: 42px; }
 .story-grid { display: grid; grid-template-columns: 1.12fr .88fr; gap: 80px; }
 .story-title h2,
@@ -325,11 +311,52 @@ h1 em, h2 em { font-style: italic; color: var(--purple); }
 .footer-right { display: flex; gap: 25px; align-items: center; }
 .footer a { color: var(--ink); }
 
-.reveal { transition: opacity .7s ease, transform .7s ease; }
-body.has-js .reveal { opacity: 0; transform: translateY(18px); }
-body.has-js .reveal.visible { opacity: 1; transform: translateY(0); }
-.delay-1 { transition-delay: .08s; }
-.delay-2 { transition-delay: .16s; }
+/* Editorial reveal system: directional, layered, and deliberately not a generic fade-in. */
+.reveal {
+  --reveal-y: 34px;
+  --reveal-x: 0px;
+  --reveal-scale: .975;
+  --reveal-rotate: 0deg;
+  opacity: 1;
+}
+body.has-js .reveal {
+  opacity: 0;
+  transform: translate3d(var(--reveal-x), var(--reveal-y), 0) scale(var(--reveal-scale)) rotate(var(--reveal-rotate));
+  clip-path: inset(0 0 8% 0);
+  filter: blur(7px);
+  transition: opacity .85s cubic-bezier(.16,1,.3,1), transform 1s cubic-bezier(.16,1,.3,1), clip-path .95s cubic-bezier(.16,1,.3,1), filter .85s cubic-bezier(.16,1,.3,1);
+  will-change: opacity, transform, clip-path, filter;
+}
+body.has-js .reveal.visible {
+  opacity: 1;
+  transform: translate3d(0,0,0) scale(1) rotate(0deg);
+  clip-path: inset(0 0 0 0);
+  filter: blur(0);
+}
+.hero-copy { --reveal-y: 44px; --reveal-x: -22px; --reveal-scale: .985; }
+.hero-book { --reveal-y: 28px; --reveal-x: 24px; --reveal-scale: .96; --reveal-rotate: 1.8deg; }
+.story-title { --reveal-y: 30px; --reveal-x: -18px; }
+.story-copy { --reveal-y: 30px; --reveal-x: 18px; }
+.statement { --reveal-y: 24px; --reveal-scale: .98; }
+.chapter-header { --reveal-y: 26px; }
+.chapter-list { --reveal-y: 30px; }
+.framework-card { --reveal-y: 24px; --reveal-scale: .985; }
+.preview-card { --reveal-y: 28px; --reveal-scale: .97; }
+.gaz-copy { --reveal-y: 30px; --reveal-x: -18px; }
+.back-cover-card { --reveal-y: 28px; --reveal-x: 18px; --reveal-scale: .965; --reveal-rotate: -1.5deg; }
+.buy-panel { --reveal-y: 34px; --reveal-scale: .985; }
+.delay-1 { transition-delay: .14s; }
+.delay-2 { transition-delay: .24s; }
+
+.book-cover-wrap { transition: transform .9s cubic-bezier(.16,1,.3,1); }
+.hero-book:hover .book-cover-wrap { transform: rotate(0deg) translateY(-7px); }
+.preview-card { transition: transform .65s cubic-bezier(.16,1,.3,1), box-shadow .65s ease; }
+.preview-card:hover { transform: translateY(-8px); box-shadow: 0 22px 50px rgba(37,32,22,.12); }
+
+@media (prefers-reduced-motion: reduce) {
+  body.has-js .reveal { opacity: 1; transform: none; clip-path: none; filter: none; transition: none; }
+  .book-cover-wrap, .preview-card { transition: none; }
+}
 
 @media (max-width: 900px) {
   body::before { inset: 11px; }
