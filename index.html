@@ -189,7 +189,7 @@ button { font: inherit; }
 <div class="progress" aria-hidden="true"><span></span></div>
 <header class="nav" aria-label="Primary navigation">
   <a class="brand" href="#top">DEWIFY</a>
-  <a class="nav-link" href="#purchase">Get the book</a>
+  <a class="nav-link" href="THE_CASH_CODE_Gaz_Martin.pdf" download="The_Cash_Code_Gaz_Martin.pdf">Download PDF</a>
 </header>
 <main id="main">
   <section class="scene hero" id="top" aria-labelledby="hero-title">
@@ -199,7 +199,7 @@ button { font: inherit; }
         <h1 id="hero-title" class="serif reveal">The<br>Cash<br>Code</h1>
         <div class="hero-byline">Gaz Martin</div>
         <p class="hero-note reveal">A practical way to think about ambition, leverage, money and the work that makes an idea real.</p>
-        <a class="cta magnetic" href="#purchase">Get the cash code</a>
+        <a class="cta magnetic" href="THE_CASH_CODE_Gaz_Martin.pdf" download="The_Cash_Code_Gaz_Martin.pdf">Download free PDF</a>
       </div>
       <div class="book-stage" aria-label="A closed book with a dark green cover">
         <div class="book-caption">The physical idea</div>
@@ -275,13 +275,12 @@ button { font: inherit; }
   <section class="scene purchase" id="purchase" aria-labelledby="purchase-title">
     <div class="scene-inner purchase-layout">
       <div><div class="purchase-byline">The Cash Code, Gaz Martin</div><h2 id="purchase-title">Begin<br>with<br>proof.</h2></div>
-      <div><p class="purchase-intro">A premium digital business book for the person who is ready to spend less time watching and more time building.</p><div class="price"><span>Digital edition</span><strong>Price to be set</strong></div><a class="cta magnetic checkout" href="#purchase">Get the cash code</a></div>
+      <div><p class="purchase-intro">A premium digital business book for the person who is ready to spend less time watching and more time building.</p><div class="price"><span>Digital edition</span><strong>Free</strong></div><a class="cta magnetic" href="THE_CASH_CODE_Gaz_Martin.pdf" download="The_Cash_Code_Gaz_Martin.pdf">Download free PDF</a></div>
     </div>
   </section>
 </main>
-<footer class="footer"><span>DEWIFY</span><span>The Cash Code by Gaz Martin</span><a href="#top">Back to top ↑</a></footer>
+<footer class="footer"><span>DEWIFY</span><span>The Cash Code by Gaz Martin</span><a href="THE_CASH_CODE_Gaz_Martin.pdf" download="The_Cash_Code_Gaz_Martin.pdf">Download again</a></footer>
 <script>
-const CHECKOUT_URL = "";
 const progressBar = document.querySelector('.progress span');
 let scrollRAF = 0;
 
@@ -370,14 +369,6 @@ document.querySelectorAll('.magnetic').forEach(button => {
   }, { passive: true });
 });
 
-document.querySelectorAll('.checkout').forEach(button => {
-  button.addEventListener('click', (event) => {
-    if (CHECKOUT_URL.trim()) {
-      event.preventDefault();
-      window.location.assign(CHECKOUT_URL);
-    }
-  });
-});
 </script>
 </body>
 </html>
