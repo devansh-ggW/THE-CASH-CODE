@@ -25,8 +25,8 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; background: var(--ivory); }
 body { margin: 0; background: var(--ivory); color: var(--ink); font-family: var(--sans); font-weight: 400; letter-spacing: .01em; overflow-x: hidden; }
-body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 20; opacity: .045; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E"); mix-blend-mode: multiply; }
-body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 19; background: radial-gradient(circle at var(--cursor-x) var(--cursor-y), rgba(255,248,225,.17), transparent 27%), linear-gradient(110deg, transparent 40%, rgba(187,154,96,.08) 53%, transparent 66%); transform: translateX(calc((var(--scroll) - .5) * 4%)); transition: background-position .2s ease; }
+body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 20; opacity: .035; background: linear-gradient(112deg, transparent 34%, rgba(187,154,96,.08) 50%, transparent 66%); }
+body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 19; background: radial-gradient(circle at 62% 34%, rgba(255,248,225,.10), transparent 30%); }
 a { color: inherit; text-decoration: none; }
 button, a { -webkit-tap-highlight-color: transparent; }
 button { font: inherit; }
@@ -45,7 +45,7 @@ button { font: inherit; }
 .rule { height: 1px; background: var(--line); width: 100%; }
 .serif { font-family: var(--serif); font-weight: 400; }
 .hero { min-height: 100svh; display: flex; align-items: center; padding: 120px 0 100px; background: radial-gradient(ellipse at 67% 38%, rgba(255,255,255,.9), transparent 38%), var(--ivory); }
-.hero::before { content: ""; position: absolute; width: 78vw; height: 38vw; max-height: 620px; right: -20vw; top: 10%; background: linear-gradient(125deg, transparent 22%, rgba(255,255,255,.7) 49%, transparent 66%); transform: rotate(-12deg) translateX(calc(var(--scroll) * -18%)); opacity: .72; }
+.hero::before { content: ""; position: absolute; width: 78vw; height: 38vw; max-height: 620px; right: -20vw; top: 10%; background: linear-gradient(125deg, transparent 22%, rgba(255,255,255,.7) 49%, transparent 66%); transform: rotate(-12deg); opacity: .72; }
 .hero-grid { display: grid; grid-template-columns: 1fr 1.05fr; align-items: center; gap: 4vw; }
 .hero-copy { position: relative; z-index: 2; padding-bottom: 2vw; }
 .hero-kicker { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
@@ -58,20 +58,20 @@ button { font: inherit; }
 .cta:hover { background: transparent; color: var(--ink); transform: translateY(-3px); }
 .cta:hover::after { transform: translate(3px,-3px); }
 .book-stage { min-height: 520px; display: grid; place-items: center; perspective: 1600px; position: relative; }
-.book-stage::before { content: ""; position: absolute; width: 70%; height: 8%; bottom: 14%; background: rgba(30,28,23,.3); filter: blur(28px); transform: rotate(-13deg) translateX(calc(var(--scroll) * 3%)); }
-.book { --tilt-x: 0deg; --tilt-y: 0deg; --book-zoom: 0; width: clamp(240px, 30vw, 410px); aspect-ratio: .69; position: relative; transform-style: preserve-3d; transform: scale(calc(1 + var(--book-zoom))) rotateX(calc(3deg + var(--tilt-y))) rotateY(calc(-16deg + var(--tilt-x))) rotateZ(-3deg) translateY(calc(var(--scroll) * -72px)); transition: transform .18s ease-out; cursor: grab; }
+.book-stage::before { content: ""; position: absolute; width: 70%; height: 8%; bottom: 14%; background: rgba(30,28,23,.3); filter: blur(28px); transform: rotate(-13deg); }
+.book { will-change: transform; --tilt-x: 0deg; --tilt-y: 0deg; --book-zoom: 0; width: clamp(240px, 30vw, 410px); aspect-ratio: .69; position: relative; transform-style: preserve-3d; transform: scale(calc(1 + var(--book-zoom))) rotateX(calc(3deg + var(--tilt-y))) rotateY(calc(-16deg + var(--tilt-x))) rotateZ(-3deg); transition: transform .18s ease-out; cursor: grab; }
 .book:active { cursor: grabbing; }
 .cover { position: absolute; inset: 0; background: #151917; color: #f0e9d9; overflow: hidden; box-shadow: 8px 14px 0 #c0b8a8, 13px 20px 28px rgba(34,31,24,.31), inset 0 0 0 1px rgba(255,255,255,.15); transform: translateZ(13px); }
-.cover-image { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; object-position: center; }
+.cover-image { position: absolute; will-change: transform; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; object-position: center; }
 .cover::marker { display: none; }
 .cover::before { content: ""; position: absolute; inset: 10px; border: 1px solid rgba(202,171,104,.55); z-index: 2; pointer-events: none; }
-.cover::after { content: ""; position: absolute; inset: -20% 38% -20% -50%; background: linear-gradient(100deg, transparent 25%, rgba(255,255,255,.22) 49%, transparent 63%); transform: translateX(calc(var(--cursor-x) / 10)); opacity: .36; z-index: 3; pointer-events: none; }
+.cover::after { content: ""; position: absolute; inset: -20% 38% -20% -50%; background: linear-gradient(100deg, transparent 25%, rgba(255,255,255,.22) 49%, transparent 63%); transform: translateX(18%); opacity: .30; z-index: 3; pointer-events: none; }
 .cover-title, .cover-author, .cover-mark { display: none; }
 .spine { position: absolute; width: 27px; height: 100%; left: -27px; top: 0; transform-origin: right; transform: rotateY(-90deg); background: linear-gradient(90deg,#101210,#45483d,#191c1a); }
 .edge { position: absolute; width: 100%; height: 100%; left: 0; top: 0; transform: translateZ(-3px); border-right: 4px solid #d4cdbd; background: repeating-linear-gradient(0deg, #d8d0c0 0 1px, #bcb4a4 1px 2px); }
 .book-caption { position: absolute; right: -12%; bottom: 7%; writing-mode: vertical-rl; transform: rotate(180deg); color: var(--muted); font-size: 10px; letter-spacing: .22em; text-transform: uppercase; }
 .scene-story { min-height: 94svh; background: var(--charcoal); color: var(--paper); display: flex; align-items: center; }
-.story-glow { position: absolute; width: 55vw; height: 55vw; right: -18vw; top: 10%; border-radius: 50%; background: radial-gradient(circle, rgba(188,159,101,.22), transparent 64%); transform: translateY(calc(var(--scroll) * -13%)); }
+.story-glow { position: absolute; width: 55vw; height: 55vw; right: -18vw; top: 10%; border-radius: 50%; background: radial-gradient(circle, rgba(188,159,101,.22), transparent 64%); transform: none; }
 .story-layout { display: grid; grid-template-columns: .7fr 1.3fr; gap: 9vw; align-items: end; }
 .story-index { border-top: 1px solid rgba(255,255,255,.28); padding-top: 15px; color: #b9b7ae; font-size: 10px; letter-spacing: .2em; }
 .story-copy { position: relative; }
@@ -91,14 +91,6 @@ button { font: inherit; }
 .step-num { font-size: 10px; letter-spacing: .18em; color: var(--muted); }
 .step h3 { font-family: var(--serif); font-size: clamp(25px, 3vw, 42px); font-weight: 400; letter-spacing: -.05em; margin: 12px 0 10px; }
 .step p { color: var(--muted); font-size: 12px; line-height: 1.5; max-width: 190px; }
-.code { min-height: 96svh; padding: 140px 0; background: var(--paper); }
-.code-layout { display: grid; grid-template-columns: .5fr 1.5fr; gap: 8vw; }
-.code-label { padding-top: 8px; }
-.code-list { border-top: 1px solid var(--line); }
-.code-line { display: grid; grid-template-columns: 48px 1fr; gap: 12px; padding: 25px 0; border-bottom: 1px solid var(--line); transition: padding-left .45s ease, color .45s ease; }
-.code-line:hover { padding-left: 18px; color: var(--gold-dark); }
-.code-line b { font-size: 10px; font-weight: 400; color: var(--gold-dark); letter-spacing: .15em; }
-.code-line span { font-family: var(--serif); font-size: clamp(25px, 3.3vw, 46px); letter-spacing: -.045em; }
 .inside { min-height: 86svh; padding: 150px 0; background: #d9d3c7; }
 .inside-head { display: flex; justify-content: space-between; align-items: end; margin-bottom: 70px; }
 .inside-head p { max-width: 240px; font-size: 12px; line-height: 1.6; color: var(--muted); }
@@ -114,9 +106,9 @@ button { font: inherit; }
 .inspect { margin-top: 42px; display: flex; gap: 16px; align-items: center; font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
 .inspect i { display: block; width: 44px; height: 1px; background: var(--gold-dark); }
 .book-hero { min-height: 580px; }
-.book-hero .book { width: clamp(265px, 29vw, 390px); transform: scale(calc(1 + var(--book-zoom))) rotateX(calc(3deg + var(--tilt-y))) rotateY(calc(-19deg + var(--tilt-x))) rotateZ(-2deg) translateY(calc(var(--scroll) * -12px)); }
+.book-hero .book { width: clamp(265px, 29vw, 390px); transform: scale(calc(1 + var(--book-zoom))) rotateX(calc(3deg + var(--tilt-y))) rotateY(calc(-19deg + var(--tilt-x))) rotateZ(-2deg); }
 .back-panel { position: absolute; inset: 0; z-index: -1; transform: translateX(18%) translateY(7%) rotateZ(4deg); background: #f5f0e5; border: 1px solid #c8bdab; box-shadow: 10px 19px 30px rgba(34,31,24,.15); padding: 0; overflow: hidden; color: var(--charcoal); transition: transform .7s cubic-bezier(.2,.75,.2,1); }
-.back-cover-image { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center; }
+.back-cover-image { width: 100%; will-change: transform; height: 100%; display: block; object-fit: cover; object-position: center; }
 .book-hero:hover .back-panel { transform: translateX(35%) translateY(12%) rotateZ(8deg); }
 .back-panel h3, .back-panel p, .back-panel .eyebrow { display: none; }
 .philosophy { min-height: 94svh; background: var(--night); color: var(--paper); padding: 150px 0 130px; }
@@ -164,7 +156,7 @@ button { font: inherit; }
   .story-copy h2 { font-size: clamp(44px, 13vw, 75px); }
   .story-copy p { margin-left: 0; }
   .story-datum { right: 0; bottom: -10%; }
-  .journey, .code, .inside, .book-scene, .philosophy, .roadmap, .purchase { padding: 105px 0; }
+  .journey, .inside, .book-scene, .philosophy, .roadmap, .purchase { padding: 105px 0; }
   .journey-head, .inside-head, .philosophy-head, .roadmap-head { display: block; }
   .journey-intro, .inside-head p, .philosophy-head p, .roadmap-head p { margin-top: 25px; }
   .timeline { grid-template-columns: 1fr 1fr; gap: 30px 0; }
@@ -246,18 +238,6 @@ button { font: inherit; }
       </div>
     </div>
   </section>
-  <section class="scene code" aria-labelledby="code-title">
-    <div class="scene-inner code-layout">
-      <div class="code-label"><div class="eyebrow">03 / The code</div><h2 id="code-title" class="serif" style="font-size:clamp(43px,6vw,85px);line-height:.9;letter-spacing:-.07em;margin:28px 0 0">Make the<br>loop<br>shorter.</h2></div>
-      <div class="code-list">
-        <div class="code-line"><b>01</b><span>Input <em>→</em> action <em>→</em> feedback <em>→</em> adaptation</span></div>
-        <div class="code-line"><b>02</b><span>Problem <em>→</em> buyer <em>→</em> offer <em>→</em> distribution</span></div>
-        <div class="code-line"><b>03</b><span>Human judgment <em>+</em> AI leverage <em>+</em> distribution</span></div>
-        <div class="code-line"><b>04</b><span>Make <em>→</em> keep <em>→</em> reinvest <em>→</em> protect <em>→</em> grow</span></div>
-        <div class="code-line"><b>05</b><span>Skill <em>→</em> offer <em>→</em> customer <em>→</em> revenue <em>→</em> system</span></div>
-      </div>
-    </div>
-  </section>
   <section class="scene inside" aria-labelledby="inside-title">
     <div class="scene-inner">
       <div class="inside-head"><h2 id="inside-title" class="serif">What is<br>inside</h2><p>Not a collection of slogans. A working vocabulary for the decisions that come next.</p></div>
@@ -308,51 +288,80 @@ button { font: inherit; }
 <footer class="footer"><span>DEWIFY</span><span>The Cash Code by Gaz Martin</span><a href="#top">Back to top ↑</a></footer>
 <script>
 const CHECKOUT_URL = "";
-const root = document.documentElement;
 const bookEls = document.querySelectorAll('.book');
-let targetX = 50, targetY = 35, raf = null;
-function updateScroll() {
-  const max = document.documentElement.scrollHeight - window.innerHeight;
-  root.style.setProperty('--scroll', max > 0 ? window.scrollY / max : 0);
-}
-window.addEventListener('scroll', updateScroll, { passive: true });
-window.addEventListener('resize', updateScroll);
-window.addEventListener('pointermove', (event) => {
-  targetX = event.clientX / window.innerWidth * 100;
-  targetY = event.clientY / window.innerHeight * 100;
-  root.style.setProperty('--cursor-x', targetX + '%');
-  root.style.setProperty('--cursor-y', targetY + '%');
-  if (!raf) raf = requestAnimationFrame(() => {
-    const rx = (targetX - 50) * .18;
-    const ry = (targetY - 50) * -.12;
-    bookEls.forEach(book => { book.style.setProperty('--tilt-x', rx + 'deg'); book.style.setProperty('--tilt-y', ry + 'deg'); });
-    raf = null;
+let pointerRAF = 0;
+let targetX = 0;
+let targetY = 0;
+let pointerActive = false;
+
+function applyBookTilt() {
+  pointerRAF = 0;
+  if (!pointerActive) return;
+  const rx = targetX * 0.14;
+  const ry = targetY * -0.09;
+  bookEls.forEach(book => {
+    book.style.setProperty('--tilt-x', rx + 'deg');
+    book.style.setProperty('--tilt-y', ry + 'deg');
   });
-}, { passive: true });
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
-}, { threshold: .18 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-document.querySelectorAll('.detail-book').forEach(book => {
-  book.addEventListener('pointerenter', () => book.style.setProperty('--book-zoom', '.035'));
-  book.addEventListener('pointerleave', () => book.style.setProperty('--book-zoom', '0'));
+}
+
+document.querySelectorAll('.book-stage').forEach(stage => {
+  stage.addEventListener('pointerenter', () => {
+    pointerActive = true;
+  }, { passive: true });
+
+  stage.addEventListener('pointermove', (event) => {
+    const box = stage.getBoundingClientRect();
+    targetX = ((event.clientX - box.left) / box.width - 0.5) * 100;
+    targetY = ((event.clientY - box.top) / box.height - 0.5) * 100;
+    if (!pointerRAF) pointerRAF = requestAnimationFrame(applyBookTilt);
+  }, { passive: true });
+
+  stage.addEventListener('pointerleave', () => {
+    pointerActive = false;
+    bookEls.forEach(book => {
+      book.style.setProperty('--tilt-x', '0deg');
+      book.style.setProperty('--tilt-y', '0deg');
+    });
+  }, { passive: true });
 });
-const magnetic = document.querySelectorAll('.magnetic');
-magnetic.forEach(button => {
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: .18 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+document.querySelectorAll('.detail-book').forEach(book => {
+  book.addEventListener('pointerenter', () => book.style.setProperty('--book-zoom', '.025'), { passive: true });
+  book.addEventListener('pointerleave', () => book.style.setProperty('--book-zoom', '0'), { passive: true });
+});
+
+document.querySelectorAll('.magnetic').forEach(button => {
   button.addEventListener('pointermove', (event) => {
     const box = button.getBoundingClientRect();
-    const x = (event.clientX - box.left - box.width / 2) * .14;
-    const y = (event.clientY - box.top - box.height / 2) * .14;
-    button.style.transform = `translate(${x}px, ${y}px)`;
-  });
-  button.addEventListener('pointerleave', () => { button.style.transform = ''; });
+    const x = (event.clientX - box.left - box.width / 2) * .08;
+    const y = (event.clientY - box.top - box.height / 2) * .08;
+    button.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+  }, { passive: true });
+  button.addEventListener('pointerleave', () => {
+    button.style.transform = '';
+  }, { passive: true });
 });
+
 document.querySelectorAll('.checkout').forEach(button => {
   button.addEventListener('click', (event) => {
-    if (CHECKOUT_URL.trim()) { event.preventDefault(); window.location.assign(CHECKOUT_URL); }
+    if (CHECKOUT_URL.trim()) {
+      event.preventDefault();
+      window.location.assign(CHECKOUT_URL);
+    }
   });
 });
-updateScroll();
 </script>
 </body>
 </html>
