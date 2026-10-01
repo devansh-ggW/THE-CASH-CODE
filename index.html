@@ -136,8 +136,9 @@ button { font: inherit; }
 .purchase .cta { border-color: var(--paper); margin-top: 22px; }
 .purchase .cta:hover { background: var(--paper); color: var(--ink); }
 .footer { padding: 25px 4.5vw 32px; background: var(--charcoal); color: #8d8e87; display: flex; justify-content: space-between; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; border-top: 1px solid rgba(255,255,255,.12); }
-.footer .footer-download { appearance: none; background: none; border: 0; color: inherit; padding: 0; font: inherit; cursor: pointer; }
+.footer .footer-download { appearance: none; background: none; background: none; border: 0; color: inherit; padding: 0; font: inherit; cursor: pointer; }
 .footer .footer-download:hover { color: var(--gold); }
+.buy-book { cursor: pointer; }
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s cubic-bezier(.2,.72,.2,1); }
 .reveal.is-visible { opacity: 1; transform: none; }
 @media (max-width: 760px) {
@@ -184,13 +185,14 @@ button { font: inherit; }
   .book { transform: scale(1) rotateZ(-3deg); }
 }
 </style>
+  <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <div class="progress" aria-hidden="true"><span></span></div>
 <header class="nav" aria-label="Primary navigation">
   <a class="brand" href="/">DEWIFY</a>
-  <button class="nav-link download-book" type="button">Download PDF</button>
+  <button class="nav-link buy-book" type="button">Buy The Cash Code</button>
 </header>
 <main id="main">
   <section class="scene hero" id="top" aria-labelledby="hero-title">
@@ -200,7 +202,7 @@ button { font: inherit; }
         <h1 id="hero-title" class="serif reveal">The<br>Cash<br>Code</h1>
         <div class="hero-byline">Gaz Martin</div>
         <p class="hero-note reveal">A practical way to think about ambition, leverage, money and the work that makes an idea real.</p>
-        <button class="cta magnetic download-book" type="button">Download free PDF</button>
+        <button class="cta magnetic buy-book" type="button">Buy The Cash Code</button>
       </div>
       <div class="book-stage" aria-label="A closed book with a dark green cover">
         <div class="book-caption">The physical idea</div>
@@ -276,12 +278,44 @@ button { font: inherit; }
   <section class="scene purchase" id="purchase" aria-labelledby="purchase-title">
     <div class="scene-inner purchase-layout">
       <div><div class="purchase-byline">The Cash Code, Gaz Martin</div><h2 id="purchase-title">Begin<br>with<br>proof.</h2></div>
-      <div><p class="purchase-intro">A premium digital business book for the person who is ready to spend less time watching and more time building.</p><div class="price"><span>Digital edition</span><strong>Free</strong></div><button class="cta magnetic download-book" type="button">Download free PDF</button></div>
+      <div><p class="purchase-intro">A premium digital business book for the person who is ready to spend less time watching and more time building.</p><div class="price"><span>Digital edition</span><strong>Secure Paddle checkout</strong></div><button class="cta magnetic buy-book" type="button">Buy The Cash Code</button></div>
     </div>
   </section>
 </main>
-<footer class="footer"><span>DEWIFY</span><span>The Cash Code by Gaz Martin</span><button class="download-book footer-download" type="button">Download again</button></footer>
+<footer class="footer"><span>DEWIFY</span><span>The Cash Code by Gaz Martin</span><button class="footer-download buy-book" type="button">Buy The Cash Code</button></footer>
 <script>
+const CASH_CODE_PRICE_ID = "pri_01m3vvtwegdmn6nrfnypysfvz6";
+const PADDLE_CLIENT_TOKEN = "live_724b7494bdaa17c63ed9bafc886";
+
+Paddle.Initialize({
+  token: PADDLE_CLIENT_TOKEN,
+  checkout: {
+    settings: {
+      displayMode: "overlay",
+      theme: "light",
+      locale: "en"
+    }
+  }
+});
+
+document.querySelectorAll('.buy-book').forEach(button => {
+  button.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (!window.Paddle || !Paddle.Checkout) return;
+
+    Paddle.Checkout.open({
+      items: [
+        {
+          priceId: CASH_CODE_PRICE_ID,
+          quantity: 1
+        }
+      ]
+    });
+  });
+});
+
 const progressBar = document.querySelector('.progress span');
 let scrollRAF = 0;
 
@@ -359,21 +393,6 @@ document.querySelectorAll('.detail-book').forEach(book => {
   book.addEventListener('pointerleave', () => book.style.setProperty('--book-zoom', '0'), { passive: true });
 });
 
-document.querySelectorAll('.download-book').forEach(button => {
-  button.addEventListener('click', (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    const link = document.createElement('a');
-    link.href = 'THE_CASH_CODE_Gaz_Martin.pdf';
-    link.download = 'The_Cash_Code_Gaz_Martin.pdf';
-    link.style.display = 'none';
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-  });
-});
-
 document.querySelectorAll('.magnetic').forEach(button => {
   button.addEventListener('pointermove', (event) => {
     const x = (event.offsetX - button.offsetWidth / 2) * .08;
@@ -384,7 +403,6 @@ document.querySelectorAll('.magnetic').forEach(button => {
     button.style.transform = '';
   }, { passive: true });
 });
-
 </script>
 </body>
 </html>
