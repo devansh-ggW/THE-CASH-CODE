@@ -18,9 +18,6 @@
   --night: #1d211f;
   --serif: Georgia, "Times New Roman", serif;
   --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --cursor-x: 50%;
-  --cursor-y: 35%;
-  --scroll: 0;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; background: var(--ivory); }
@@ -34,7 +31,7 @@ button { font: inherit; }
 .skip { position: fixed; top: 12px; left: 12px; transform: translateY(-160%); background: var(--ink); color: var(--paper); padding: 10px 14px; z-index: 100; }
 .skip:focus { transform: none; }
 .progress { position: fixed; top: 0; left: 0; height: 3px; width: 100%; z-index: 50; background: rgba(23,24,23,.08); }
-.progress span { display: block; height: 100%; width: calc(var(--scroll) * 100%); transform-origin: left; background: var(--gold-dark); }
+.progress span { display: block; height: 100%; width: 100%; transform: scaleX(0); transform-origin: left; background: var(--gold-dark); will-change: transform; }
 .nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 40; display: flex; justify-content: space-between; align-items: center; padding: 28px 4.5vw; mix-blend-mode: multiply; }
 .brand { font-size: 11px; font-weight: 700; letter-spacing: .22em; }
 .nav-link { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; border-bottom: 1px solid var(--ink); padding-bottom: 5px; transition: color .3s ease, border-color .3s ease; }
@@ -146,7 +143,7 @@ button { font: inherit; }
   .nav { padding: 20px 6vw; }
   .scene-inner { width: 88vw; }
   .hero { padding-top: 110px; align-items: start; }
-  .hero-grid, .story-layout, .code-layout, .book-layout, .purchase-layout { grid-template-columns: 1fr; gap: 55px; }
+  .hero-grid, .story-layout, .book-layout, .purchase-layout { grid-template-columns: 1fr; gap: 55px; }
   .hero h1 { font-size: clamp(60px, 18vw, 110px); }
   .hero-copy { padding-top: 30px; }
   .book-stage { min-height: 430px; }
@@ -164,9 +161,6 @@ button { font: inherit; }
   .step { min-height: 210px; }
   .step:nth-child(3), .step:nth-child(4) { border-top: 1px solid var(--line); }
   .step:nth-child(3) .step-dot, .step:nth-child(4) .step-dot { margin-top: 25px; }
-  .code-layout { gap: 45px; }
-  .code-line { grid-template-columns: 34px 1fr; }
-  .code-line span { font-size: 30px; }
   .inside-head { margin-bottom: 55px; }
   .topic-field { gap: 15px 17px; }
   .topic { font-size: clamp(30px, 9vw, 50px); }
@@ -289,10 +283,26 @@ button { font: inherit; }
 <script>
 const CHECKOUT_URL = "";
 const bookEls = document.querySelectorAll('.book');
+const progressBar = document.querySelector('.progress span');
+let scrollRAF = 0;
 let pointerRAF = 0;
 let targetX = 0;
 let targetY = 0;
 let pointerActive = false;
+
+function updateProgress() {
+  scrollRAF = 0;
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  const ratio = max > 0 ? window.scrollY / max : 0;
+  progressBar.style.transform = `scaleX(${ratio})`;
+}
+
+window.addEventListener('scroll', () => {
+  if (!scrollRAF) scrollRAF = requestAnimationFrame(updateProgress);
+}, { passive: true });
+
+window.addEventListener('resize', updateProgress);
+updateProgress();
 
 function applyBookTilt() {
   pointerRAF = 0;
