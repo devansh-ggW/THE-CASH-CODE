@@ -32,7 +32,7 @@ button { font: inherit; }
 .progress span { display: block; height: 100%; width: 100%; transform: scaleX(0); transform-origin: left; background: var(--gold-dark); }
 .nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 40; display: flex; justify-content: space-between; align-items: center; padding: 28px 4.5vw; }
 .brand { font-size: 11px; font-weight: 700; letter-spacing: .22em; }
-.nav-link { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; border-bottom: 1px solid var(--ink); padding-bottom: 5px; transition: color .3s ease, border-color .3s ease; }
+.nav-link { appearance: none; background: none; color: inherit; border: 0; border-bottom: 1px solid var(--ink); padding: 0 0 5px; cursor: pointer; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; border-bottom: 1px solid var(--ink); padding-bottom: 5px; transition: color .3s ease, border-color .3s ease; }
 .nav-link:hover { color: var(--gold-dark); border-color: var(--gold-dark); }
 .scene { position: relative; overflow: hidden; }
 .scene-inner { width: min(1180px, 90vw); margin: 0 auto; position: relative; }
@@ -136,7 +136,8 @@ button { font: inherit; }
 .purchase .cta { border-color: var(--paper); margin-top: 22px; }
 .purchase .cta:hover { background: var(--paper); color: var(--ink); }
 .footer { padding: 25px 4.5vw 32px; background: var(--charcoal); color: #8d8e87; display: flex; justify-content: space-between; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; border-top: 1px solid rgba(255,255,255,.12); }
-.footer a:hover { color: var(--gold); }
+.footer .footer-download { appearance: none; background: none; border: 0; color: inherit; padding: 0; font: inherit; cursor: pointer; }
+.footer .footer-download:hover { color: var(--gold); }
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s cubic-bezier(.2,.72,.2,1); }
 .reveal.is-visible { opacity: 1; transform: none; }
 @media (max-width: 760px) {
@@ -189,7 +190,7 @@ button { font: inherit; }
 <div class="progress" aria-hidden="true"><span></span></div>
 <header class="nav" aria-label="Primary navigation">
   <a class="brand" href="/">DEWIFY</a>
-  <a class="nav-link" href="THE_CASH_CODE_Gaz_Martin.pdf" download="The_Cash_Code_Gaz_Martin.pdf">Download PDF</a>
+  <button class="nav-link download-book" type="button">Download PDF</button>
 </header>
 <main id="main">
   <section class="scene hero" id="top" aria-labelledby="hero-title">
@@ -199,7 +200,7 @@ button { font: inherit; }
         <h1 id="hero-title" class="serif reveal">The<br>Cash<br>Code</h1>
         <div class="hero-byline">Gaz Martin</div>
         <p class="hero-note reveal">A practical way to think about ambition, leverage, money and the work that makes an idea real.</p>
-        <a class="cta magnetic" href="THE_CASH_CODE_Gaz_Martin.pdf" download="The_Cash_Code_Gaz_Martin.pdf">Download free PDF</a>
+        <button class="cta magnetic download-book" type="button">Download free PDF</button>
       </div>
       <div class="book-stage" aria-label="A closed book with a dark green cover">
         <div class="book-caption">The physical idea</div>
@@ -275,11 +276,11 @@ button { font: inherit; }
   <section class="scene purchase" id="purchase" aria-labelledby="purchase-title">
     <div class="scene-inner purchase-layout">
       <div><div class="purchase-byline">The Cash Code, Gaz Martin</div><h2 id="purchase-title">Begin<br>with<br>proof.</h2></div>
-      <div><p class="purchase-intro">A premium digital business book for the person who is ready to spend less time watching and more time building.</p><div class="price"><span>Digital edition</span><strong>Free</strong></div><a class="cta magnetic" href="THE_CASH_CODE_Gaz_Martin.pdf" download="The_Cash_Code_Gaz_Martin.pdf">Download free PDF</a></div>
+      <div><p class="purchase-intro">A premium digital business book for the person who is ready to spend less time watching and more time building.</p><div class="price"><span>Digital edition</span><strong>Free</strong></div><button class="cta magnetic download-book" type="button">Download free PDF</button></div>
     </div>
   </section>
 </main>
-<footer class="footer"><span>DEWIFY</span><span>The Cash Code by Gaz Martin</span><a href="THE_CASH_CODE_Gaz_Martin.pdf" download="The_Cash_Code_Gaz_Martin.pdf">Download again</a></footer>
+<footer class="footer"><span>DEWIFY</span><span>The Cash Code by Gaz Martin</span><button class="download-book footer-download" type="button">Download again</button></footer>
 <script>
 const progressBar = document.querySelector('.progress span');
 let scrollRAF = 0;
@@ -356,6 +357,21 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 document.querySelectorAll('.detail-book').forEach(book => {
   book.addEventListener('pointerenter', () => book.style.setProperty('--book-zoom', '.025'), { passive: true });
   book.addEventListener('pointerleave', () => book.style.setProperty('--book-zoom', '0'), { passive: true });
+});
+
+document.querySelectorAll('.download-book').forEach(button => {
+  button.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const link = document.createElement('a');
+    link.href = 'THE_CASH_CODE_Gaz_Martin.pdf';
+    link.download = 'The_Cash_Code_Gaz_Martin.pdf';
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  });
 });
 
 document.querySelectorAll('.magnetic').forEach(button => {
